@@ -6,7 +6,7 @@ from recipes.serializers import RecipeSerializer
 class TestRecipes(TestCase):
     def test_create_recipe(self):
         data = {'name': 'Pizza', 'description': 'Put it in the oven', 'ingredients': [{'name': 'tomato'}, {'name': 'dough'}, {'name': 'cheese'}]}
-        response = self.client.post('/recipes/', data, "application/json")
+        self.client.post('/api/v1/recipes/', data, "application/json")
         recipes = Recipe.objects.all()
         self.assertEquals(len(recipes), 1)
         self.assertEqual(recipes[0].name, data['name'])
@@ -28,7 +28,7 @@ class TestRecipes(TestCase):
 
         recipes = Recipe.objects.all()
         serializer = RecipeSerializer(recipes, many=True) 
-        response = self.client.get('/recipes/')  # urlresolver
+        response = self.client.get('/api/v1/recipes/')  # urlresolver
         self.assertEquals(len(response.data), 2)
         self.assertEqual(response.data, serializer.data)
 
@@ -43,7 +43,7 @@ class TestRecipes(TestCase):
 
         recipes = Recipe.objects.filter(name__contains='Pi')
         serializer = RecipeSerializer(recipes, many=True) 
-        response = self.client.get('/recipes/?name=Pi')  # urlresolver
+        response = self.client.get('/api/v1/recipes/?name=Pi')  # urlresolver
         self.assertEquals(len(response.data), 1)
         self.assertEqual(response.data, serializer.data)
 
@@ -53,7 +53,7 @@ class TestRecipes(TestCase):
 
         recipe = Recipe.objects.get(pk=1)
         serializer = RecipeSerializer(recipe) 
-        response = self.client.get('/recipes/1/')  # urlresolver
+        response = self.client.get('/api/v1/recipes/1/')  # urlresolver
         self.assertEqual(response.data, serializer.data)
 
     def test_update_recipe(self):
@@ -61,7 +61,7 @@ class TestRecipes(TestCase):
         Ingredient.objects.create(recipe=recipe, name='dough')
 
         data = {'name': 'Pizza', 'description': 'Put it in the oven', 'ingredients': [{'name': 'tomato'}, {'name': 'dough'}, {'name': 'cheese'}]}
-        response = self.client.put('/recipes/1/', data, "application/json")
+        self.client.put('/api/v1/recipes/1/', data, "application/json")
 
         recipes = Recipe.objects.all()
         self.assertEquals(len(recipes), 1)
@@ -77,7 +77,7 @@ class TestRecipes(TestCase):
         recipe = Recipe.objects.create(name='Bread', description='Put it in the oven')
         Ingredient.objects.create(recipe=recipe, name='dough')
 
-        response = self.client.delete('/recipes/1/')
+        response = self.client.delete('/api/v1/recipes/1/')
 
         recipes = Recipe.objects.all()
         self.assertEquals(len(recipes), 0)
