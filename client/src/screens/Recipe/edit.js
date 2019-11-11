@@ -18,7 +18,7 @@ export default function RecipeEdit() {
       ) : (
         <RecipeForm
           recipe={recipe.value}
-          onSubmit={values => updateRecipe(id, values)}
+          onSubmit={values => updateRecipe(recipe.value.id, values)}
         />
       )}
       <Link to={`/recipes/${id}`}>Cancel</Link>
