@@ -1,0 +1,7 @@
+{
+    "name": "onboarding",
+    "version": "0.1.0",
+    "scripts": {
+        "postinstall": "npm install --prefix client && npm run-script build --prefix client && mv client/build/* staticfiles"
+    }
+}
