@@ -1,2 +1,2 @@
 release: python manage.py migrate
-web: gunicorn baconboardingkend.wsgi --log-file -
+web: gunicorn onboarding.wsgi --log-file -
