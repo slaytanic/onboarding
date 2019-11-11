@@ -77,7 +77,7 @@ class TestRecipes(TestCase):
         recipe = Recipe.objects.create(name='Bread', description='Put it in the oven')
         Ingredient.objects.create(recipe=recipe, name='dough')
 
-        response = self.client.delete('/api/v1/recipes/1/')
+        self.client.delete('/api/v1/recipes/1/')
 
         recipes = Recipe.objects.all()
         self.assertEquals(len(recipes), 0)

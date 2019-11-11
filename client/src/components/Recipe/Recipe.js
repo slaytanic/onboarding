@@ -7,8 +7,8 @@ export default function Recipe({ recipe }) {
       <div>{recipe.description}</div>
       <h4>Ingredients</h4>
       <ul>
-        {recipe.ingredients.map(ingredient => (
-          <li>{ingredient.name}</li>
+        {recipe.ingredients.map((ingredient, i) => (
+          <li key={i}>{ingredient.name}</li>
         ))}
       </ul>
     </div>

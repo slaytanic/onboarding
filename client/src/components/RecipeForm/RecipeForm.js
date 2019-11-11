@@ -1,24 +1,26 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
-import { Formik, Form, Field, ErrorMessage } from 'formik'
+import { Formik, Form, Field, FieldArray, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 
 const RecipeSchema = Yup.object().shape({
   name: Yup.string()
     .max(200, 'Too Long!')
-    .required('Required'),
+    .required('Recipe name is required'),
   description: Yup.string()
     .max(200, 'Too Long!')
-    .required('Required'),
-  ingredients: Yup.array().of(
-    Yup.object()
-      .shape({
-        name: Yup.string()
-          .max(200, 'Too Long!')
-          .required('Required'),
-      })
-      .required('Must have ingredients')
-  ),
+    .required('Recipe description is required'),
+  ingredients: Yup.array()
+    .of(
+      Yup.object()
+        .shape({
+          name: Yup.string()
+            .max(200, 'Too Long!')
+            .required('Required'),
+        })
+        .required('Must have ingredients')
+    )
+    .min(1, 'Must have at least one ingredient'),
 })
 
 export default function RecipeForm({ recipe = {}, onSubmit }) {
@@ -42,7 +44,7 @@ export default function RecipeForm({ recipe = {}, onSubmit }) {
         }}
       >
         {({
-          // values,
+          values,
           // errors,
           // touched,
           // handleChange,
@@ -55,6 +57,52 @@ export default function RecipeForm({ recipe = {}, onSubmit }) {
             <ErrorMessage name="name" component="div" />
             <Field name="description" placeholder="Description" />
             <ErrorMessage name="description" component="div" />
+            <h5>Ingredients</h5>
+            <FieldArray
+              name="ingredients"
+              render={arrayHelpers => (
+                <div>
+                  {values.ingredients && values.ingredients.length > 0 ? (
+                    values.ingredients.map((ingredients, index) => (
+                      <div key={index}>
+                        <Field
+                          name={`ingredients.${index}.name`}
+                          placeholder={`Ingredient #${index + 1}`}
+                        />
+                        <button
+                          type="button"
+                          onClick={() => arrayHelpers.remove(index)}
+                        >
+                          -
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() =>
+                            arrayHelpers.insert(index + 1, { name: '' })
+                          }
+                        >
+                          +
+                        </button>
+                        <ErrorMessage
+                          name={`ingredients.${index}.name`}
+                          component="div"
+                        />
+                      </div>
+                    ))
+                  ) : (
+                    <div>
+                      <ErrorMessage name={`ingredients`} component="div" />
+                      <button
+                        type="button"
+                        onClick={() => arrayHelpers.push({ name: '' })}
+                      >
+                        Add an ingredient
+                      </button>
+                    </div>
+                  )}
+                </div>
+              )}
+            />
             <button type="submit" disabled={isSubmitting}>
               Submit
             </button>

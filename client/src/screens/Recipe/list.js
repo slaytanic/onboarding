@@ -6,7 +6,7 @@ import RecipeList from 'components/RecipeList'
 
 import { getRecipes } from 'data/recipes/api'
 
-export default function Home() {
+export default function ViewRecipeList() {
   const recipes = useAsync(getRecipes)
   return (
     <div>
