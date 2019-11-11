@@ -134,5 +134,10 @@ STATIC_URL = '/static/'
 try:
     import django_heroku
     django_heroku.settings(locals())
+
+    import dj_database_url
+    databases_default = dj_database_url.config(conn_max_age=600, ssl_require=True)
+    if databases_default:
+        DATABASES['default'] = databases_default
 except ImportError:
     pass
