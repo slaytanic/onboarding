@@ -1,6 +1,9 @@
 import { request } from 'utils/api'
 
-export function getRecipes() {
+export function getRecipes(q) {
+  if (q) {
+    return request(`/recipes/?name=${q}`)
+  }
   return request('/recipes/')
 }
 
