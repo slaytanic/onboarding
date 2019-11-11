@@ -130,3 +130,9 @@ STATIC_URL = '/static/'
 #         'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
 #     }
 # }
+
+try:
+    import django_heroku
+    django_heroku.settings(locals())
+except ImportError:
+    pass
