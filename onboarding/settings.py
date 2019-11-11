@@ -125,9 +125,12 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'client', 'build'),
-)
+# STATICFILES_DIRS = (
+#     os.path.join(BASE_DIR, 'client', 'build'),
+# )
+
+WHITENOISE_ROOT = os.path.join(BASE_DIR, 'client', 'build')
+WHITENOISE_INDEX_FILE = True
 
 # REST_FRAMEWORK = {
 #     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
