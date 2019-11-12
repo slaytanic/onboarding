@@ -38,6 +38,26 @@
       "plugin:prettier/recommended"
     ]
   },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.js",
+      "src/**/*.jsx",
+      "src/**/*.ts",
+      "src/**/*.tsx",
+      "!src/index.tsx",
+      "!**/node_modules/**",
+      "!src/setupProxy.js",
+      "!src/setupTests.js",
+      "!src/serviceWorker.js",
+      "!src/data/**/api.ts",
+      "!src/utils/api/index.js"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "lines": 0
+      }
+    }
+  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -51,6 +71,7 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^4.2.3",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "@typescript-eslint/eslint-plugin": "^2.7.0",

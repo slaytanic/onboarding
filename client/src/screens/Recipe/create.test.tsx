@@ -21,6 +21,7 @@ function renderScreenRecipeCreate(
 
   return { ...utils, history }
 }
+
 describe('<ScreenRecipeCreate>', () => {
   it('should create recipe when submitted', async () => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
