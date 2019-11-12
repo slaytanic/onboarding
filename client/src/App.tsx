@@ -1,7 +1,11 @@
-import React from 'react'
+import React, { ReactElement } from 'react'
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// @ts-ignore
 import { Container } from '@bootstrap-styled/v4'
+// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// @ts-ignore
 import BootstrapProvider from '@bootstrap-styled/provider'
 
 import Home from 'screens/Home'
@@ -14,7 +18,7 @@ import {
 } from 'screens/Recipe'
 import AppHeader from './components/AppHeader'
 
-function App() {
+function App(): ReactElement {
   return (
     <BootstrapProvider>
       <Router>

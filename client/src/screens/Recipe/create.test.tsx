@@ -1,22 +1,17 @@
 import React from 'react'
 import { Router } from 'react-router-dom'
-import {
-  createMemoryHistory,
-  MemoryHistoryBuildOptions,
-  MemoryHistory,
-} from 'history'
-import { render, act, RenderResult } from '@testing-library/react'
+import { createMemoryHistory, MemoryHistoryBuildOptions } from 'history'
+import { render, act } from '@testing-library/react'
 import { createRecipe } from 'data/recipes/api'
 import ScreenRecipeCreate from './create'
 import userEvent from '@testing-library/user-event'
+import { RenderAndHistory } from 'utils/test/types'
 
 jest.mock('data/recipes/api')
 
-type RenderScreenRecipeCreate = RenderResult & { history: MemoryHistory }
-
 function renderScreenRecipeCreate(
   options?: MemoryHistoryBuildOptions
-): RenderScreenRecipeCreate {
+): RenderAndHistory {
   const history = createMemoryHistory(options)
   const utils = render(
     <Router history={history}>
