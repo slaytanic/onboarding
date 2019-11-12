@@ -4,6 +4,7 @@ import { createMemoryHistory } from 'history'
 import { render, act } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import RecipeSearch from '.'
+import { RenderAndHistory } from 'utils/test/types'
 
 function renderRecipeSearch(): RenderAndHistory {
   const history = createMemoryHistory()

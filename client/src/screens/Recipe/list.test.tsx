@@ -25,9 +25,9 @@ describe('<ScreenRecipeList>', () => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
     getRecipes.mockResolvedValue([])
-    await act(async () =>
+    await act(async (): Promise<void> => {
       renderScreenRecipeList({ initialEntries: ['/recipes/'] })
-    )
+    })
     expect(getRecipes).toHaveBeenCalledWith('')
   })
 
@@ -35,9 +35,9 @@ describe('<ScreenRecipeList>', () => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
     getRecipes.mockResolvedValue([])
-    await act(async () =>
+    await act(async (): Promise<void> => {
       renderScreenRecipeList({ initialEntries: ['/recipes/?q=Pizza'] })
-    )
+    })
     expect(getRecipes).toHaveBeenCalledWith('Pizza')
   })
 })
