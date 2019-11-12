@@ -1,8 +1,14 @@
-import React from 'react'
+import React, { ReactElement } from 'react'
+
+import { Recipe } from 'data/recipes/types'
 
 import RecipeItem from 'components/RecipeItem'
 
-export default function RecipeList({ recipes }) {
+interface Props {
+  recipes?: Recipe[];
+}
+
+export default function RecipeList({ recipes = [] }: Props): ReactElement {
   if (!recipes.length) {
     return <div>No recipes :(</div>
   }

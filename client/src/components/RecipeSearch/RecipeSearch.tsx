@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { ReactElement } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 import qs from 'query-string'
 import { Formik } from 'formik'
+// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// @ts-ignore doesn't have definitions available
 import { Form, Button, Input } from '@bootstrap-styled/v4'
 
-export default function RecipeSearch() {
+export default function RecipeSearch(): ReactElement {
   const history = useHistory()
   const location = useLocation()
   let q
@@ -18,7 +20,7 @@ export default function RecipeSearch() {
   return (
     <Formik
       initialValues={{ q: q || '' }}
-      onSubmit={async (values, actions) => {
+      onSubmit={async (values, actions): Promise<void> => {
         actions.setSubmitting(false)
         if (values.q && values.q.length) {
           history.push(`/recipes/?q=${values.q}`)
@@ -27,7 +29,13 @@ export default function RecipeSearch() {
         }
       }}
     >
-      {({ values, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
+      {({
+        values,
+        handleChange,
+        handleBlur,
+        handleSubmit,
+        isSubmitting,
+      }): ReactElement => (
         <Form inline className="my-2 my-lg-0">
           <Input
             className="form-control mr-sm-2"

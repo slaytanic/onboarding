@@ -5,7 +5,7 @@ import { render, act } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import RecipeSearch from '.'
 
-function renderRecipeSearch() {
+function renderRecipeSearch(): RenderAndHistory {
   const history = createMemoryHistory()
   const utils = render(
     <Router history={history}>

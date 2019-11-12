@@ -1,14 +1,22 @@
 import React from 'react'
 import { Router } from 'react-router-dom'
-import { createMemoryHistory } from 'history'
-import { render, act } from '@testing-library/react'
+import {
+  createMemoryHistory,
+  MemoryHistoryBuildOptions,
+  MemoryHistory,
+} from 'history'
+import { render, act, RenderResult } from '@testing-library/react'
 import { createRecipe } from 'data/recipes/api'
 import ScreenRecipeCreate from './create'
 import userEvent from '@testing-library/user-event'
 
 jest.mock('data/recipes/api')
 
-function renderScreenRecipeCreate(options) {
+type RenderScreenRecipeCreate = RenderResult & { history: MemoryHistory }
+
+function renderScreenRecipeCreate(
+  options?: MemoryHistoryBuildOptions
+): RenderScreenRecipeCreate {
   const history = createMemoryHistory(options)
   const utils = render(
     <Router history={history}>
@@ -20,6 +28,8 @@ function renderScreenRecipeCreate(options) {
 }
 describe('<ScreenRecipeCreate>', () => {
   it('should create recipe when submitted', async () => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
     createRecipe.mockResolvedValue()
     const { getByPlaceholderText, getByText } = renderScreenRecipeCreate()
     await act(async () => {

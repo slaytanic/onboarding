@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { ReactElement } from 'react'
 import { useHistory } from 'react-router-dom'
 import { Formik, Form, Field, FieldArray, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
+
+import { Recipe } from 'data/recipes/types'
 
 const RecipeSchema = Yup.object().shape({
   name: Yup.string()
@@ -23,7 +25,15 @@ const RecipeSchema = Yup.object().shape({
     .min(1, 'Must have at least one ingredient'),
 })
 
-export default function RecipeForm({ recipe = {}, onSubmit }) {
+interface Props {
+  recipe?: Recipe;
+  onSubmit: Function;
+}
+
+export default function RecipeForm({
+  recipe = { name: '', description: '', ingredients: [{ name: '' }] },
+  onSubmit,
+}: Props): ReactElement {
   const history = useHistory()
   const initialValues = {
     name: recipe.name || '',
@@ -35,7 +45,7 @@ export default function RecipeForm({ recipe = {}, onSubmit }) {
       <Formik
         initialValues={initialValues}
         validationSchema={RecipeSchema}
-        onSubmit={async (values, actions) => {
+        onSubmit={async (values, actions): Promise<void> => {
           const response = await onSubmit(values)
           actions.setSubmitting(false)
           if (response && response.id) {
@@ -51,7 +61,7 @@ export default function RecipeForm({ recipe = {}, onSubmit }) {
           // handleBlur,
           // handleSubmit,
           isSubmitting,
-        }) => (
+        }): ReactElement => (
           <Form>
             <Field name="name" placeholder="Name" />
             <ErrorMessage name="name" component="div" />
@@ -60,7 +70,7 @@ export default function RecipeForm({ recipe = {}, onSubmit }) {
             <h5>Ingredients</h5>
             <FieldArray
               name="ingredients"
-              render={arrayHelpers => (
+              render={(arrayHelpers): ReactElement => (
                 <div>
                   {values.ingredients && values.ingredients.length > 0 ? (
                     values.ingredients.map((ingredients, index) => (
@@ -71,13 +81,13 @@ export default function RecipeForm({ recipe = {}, onSubmit }) {
                         />
                         <button
                           type="button"
-                          onClick={() => arrayHelpers.remove(index)}
+                          onClick={(): void => arrayHelpers.remove(index)}
                         >
                           -
                         </button>
                         <button
                           type="button"
-                          onClick={() =>
+                          onClick={(): void =>
                             arrayHelpers.insert(index + 1, { name: '' })
                           }
                         >
@@ -94,7 +104,7 @@ export default function RecipeForm({ recipe = {}, onSubmit }) {
                       <ErrorMessage name={`ingredients`} component="div" />
                       <button
                         type="button"
-                        onClick={() => arrayHelpers.push({ name: '' })}
+                        onClick={(): void => arrayHelpers.push({ name: '' })}
                       >
                         Add an ingredient
                       </button>

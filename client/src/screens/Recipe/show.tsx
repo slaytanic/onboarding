@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ReactElement } from 'react'
 import { useAsync } from 'react-use'
 import { Link, useParams } from 'react-router-dom'
 
@@ -6,7 +6,7 @@ import Recipe from 'components/Recipe'
 
 import { getRecipe } from 'data/recipes/api'
 
-export default function RecipeShow() {
+export default function RecipeShow(): ReactElement {
   const { id } = useParams()
   const recipe = useAsync(() => getRecipe(id), [id])
   return (

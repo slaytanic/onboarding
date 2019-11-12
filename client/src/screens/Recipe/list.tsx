@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ReactElement } from 'react'
 import { useAsync } from 'react-use'
 import { Link, useLocation } from 'react-router-dom'
 import qs from 'query-string'
@@ -7,12 +7,12 @@ import RecipeList from 'components/RecipeList'
 
 import { getRecipes } from 'data/recipes/api'
 
-export default function ViewRecipeList() {
+export default function ViewRecipeList(): ReactElement {
   const location = useLocation()
-  let q
+  let q = ''
   if (location.search) {
     const params = qs.parse(location.search)
-    if (params.q) {
+    if (params.q && typeof params.q === 'string') {
       q = params.q
     }
   }
