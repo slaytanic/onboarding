@@ -1,7 +1,10 @@
 import React, { ReactElement } from 'react'
 import { useHistory } from 'react-router-dom'
-import { Formik, Form, Field, FieldArray, ErrorMessage } from 'formik'
+import { Formik, Field, FieldArray, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
+// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// @ts-ignore
+import { Row, Col, Form, Input, Button, H5 } from '@bootstrap-styled/v4'
 
 import { Recipe } from 'data/recipes/types'
 
@@ -42,6 +45,10 @@ export default function RecipeForm({
   }
   return (
     <div>
+      {/* <BForm>
+        <Input placeholder="Name"></Input>
+        <Input placeholder="Description"></Input>
+      </BForm> */}
       <Formik
         initialValues={initialValues}
         validationSchema={RecipeSchema}
@@ -59,63 +66,85 @@ export default function RecipeForm({
           // touched,
           // handleChange,
           // handleBlur,
-          // handleSubmit,
+          handleSubmit,
           isSubmitting,
         }): ReactElement => (
-          <Form>
-            <Field name="name" placeholder="Name" />
-            <ErrorMessage name="name" component="div" />
-            <Field name="description" placeholder="Description" />
-            <ErrorMessage name="description" component="div" />
-            <h5>Ingredients</h5>
+          <Form onSubmit={handleSubmit}>
+            <Row className="mt-4">
+              <Field as={Input} name="name" placeholder="Name" />
+            </Row>
+            <Row>
+              <ErrorMessage name="name" component="div" />
+            </Row>
+            <Row className="mt-4">
+              <Field as={Input} name="description" placeholder="Description" />
+            </Row>
+            <Row>
+              <ErrorMessage name="description" component="div" />
+            </Row>
+            <Row className="mt-4">
+              <H5>Ingredients</H5>
+            </Row>
             <FieldArray
               name="ingredients"
-              render={(arrayHelpers): ReactElement => (
-                <div>
-                  {values.ingredients && values.ingredients.length > 0 ? (
-                    values.ingredients.map((ingredients, index) => (
-                      <div key={index}>
-                        <Field
-                          name={`ingredients.${index}.name`}
-                          placeholder={`Ingredient #${index + 1}`}
-                        />
-                        <button
-                          type="button"
-                          onClick={(): void => arrayHelpers.remove(index)}
-                        >
-                          -
-                        </button>
-                        <button
-                          type="button"
-                          onClick={(): void =>
-                            arrayHelpers.insert(index + 1, { name: '' })
-                          }
-                        >
-                          +
-                        </button>
+              render={(arrayHelpers): ReactElement | ReactElement[] =>
+                values.ingredients && values.ingredients.length > 0 ? (
+                  values.ingredients.map((_, index) => (
+                    <>
+                      <Row key={index} className="mt-4">
+                        <Col md="10">
+                          <Field
+                            as={Input}
+                            name={`ingredients.${index}.name`}
+                            placeholder={`Ingredient #${index + 1}`}
+                          />
+                        </Col>
+                        <Col md="1">
+                          <Button
+                            onClick={(): void => arrayHelpers.remove(index)}
+                          >
+                            -
+                          </Button>
+                        </Col>
+                        <Col md="1">
+                          <Button
+                            onClick={(): void =>
+                              arrayHelpers.insert(index + 1, { name: '' })
+                            }
+                          >
+                            +
+                          </Button>
+                        </Col>
+                      </Row>
+                      <Row>
                         <ErrorMessage
                           name={`ingredients.${index}.name`}
                           component="div"
                         />
-                      </div>
-                    ))
-                  ) : (
-                    <div>
+                      </Row>
+                    </>
+                  ))
+                ) : (
+                  <>
+                    <Row className="mt-2">
                       <ErrorMessage name={`ingredients`} component="div" />
-                      <button
-                        type="button"
+                    </Row>
+                    <Row className="mt-2">
+                      <Button
                         onClick={(): void => arrayHelpers.push({ name: '' })}
                       >
                         Add an ingredient
-                      </button>
-                    </div>
-                  )}
-                </div>
-              )}
+                      </Button>
+                    </Row>
+                  </>
+                )
+              }
             />
-            <button type="submit" disabled={isSubmitting}>
-              Submit
-            </button>
+            <Row className="mt-4">
+              <Button type="submit" disabled={isSubmitting}>
+                Submit
+              </Button>
+            </Row>
           </Form>
         )}
       </Formik>

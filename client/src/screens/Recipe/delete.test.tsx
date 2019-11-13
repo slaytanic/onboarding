@@ -1,7 +1,7 @@
 import React from 'react'
 import { Router } from 'react-router-dom'
 import { createMemoryHistory, MemoryHistoryBuildOptions } from 'history'
-import { render, act, wait } from '@testing-library/react'
+import { render, wait } from '@testing-library/react'
 import { getRecipe, deleteRecipe } from 'data/recipes/api'
 import ScreenRecipeDelete from './delete'
 import userEvent from '@testing-library/user-event'

@@ -20,7 +20,7 @@ import AppHeader from './components/AppHeader'
 
 function App(): ReactElement {
   return (
-    <BootstrapProvider>
+    <BootstrapProvider reset={true}>
       <Router>
         <AppHeader />
         <Container>

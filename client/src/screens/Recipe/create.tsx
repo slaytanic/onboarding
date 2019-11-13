@@ -9,7 +9,9 @@ export default function RecipeCreate(): ReactElement {
   return (
     <div>
       <RecipeForm onSubmit={createRecipe} />
-      <Link to={`/recipes`}>Cancel</Link>
+      <Link className="mt-4" to={`/recipes`}>
+        Go back
+      </Link>
     </div>
   )
 }

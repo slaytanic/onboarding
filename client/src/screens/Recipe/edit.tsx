@@ -26,7 +26,9 @@ export default function RecipeEdit(): ReactElement {
           }}
         />
       )}
-      <Link to={`/recipes/${id}`}>Cancel</Link>
+      <Link className="mt-4" to={`/recipes/${id}`}>
+        Go back
+      </Link>
     </div>
   )
 }

@@ -23,8 +23,6 @@ class RecipeSerializer(serializers.HyperlinkedModelSerializer):
 
     def update(self, instance, validated_data):
         ingredients_data = validated_data.pop('ingredients')
-        ingredients = (instance.ingredients).all()
-        ingredients = list(ingredients)
         instance.name = validated_data.get('name', instance.name)
         instance.description = validated_data.get('description', instance.description)
         instance.save()
@@ -33,10 +31,5 @@ class RecipeSerializer(serializers.HyperlinkedModelSerializer):
 
         for ingredient_data in ingredients_data:
             Ingredient.objects.create(recipe=instance, **ingredient_data)
-
-        # for ingredient_data in ingredients_data:
-        #     ingredient = ingredients.pop(0)
-        #     ingredient.name = ingredient_data.get('name', ingredient.name)
-        #     ingredient.save()
 
         return instance

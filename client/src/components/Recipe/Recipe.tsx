@@ -2,6 +2,16 @@ import React, { ReactElement } from 'react'
 
 import { Recipe as RecipeType, Ingredient } from 'data/recipes/types'
 
+import {
+  P,
+  H3,
+  H5,
+  ListGroup,
+  ListGroupItem,
+  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+  // @ts-ignore
+} from '@bootstrap-styled/v4'
+
 interface Props {
   recipe?: RecipeType;
 }
@@ -12,14 +22,14 @@ export default function Recipe({ recipe }: Props): ReactElement {
   }
   return (
     <div>
-      <h3>{recipe.name}</h3>
-      <div>{recipe.description}</div>
-      <h4>Ingredients</h4>
-      <ul>
+      <H3 className="mt-4">{recipe.name}</H3>
+      <P>{recipe.description}</P>
+      <H5>Ingredients</H5>
+      <ListGroup>
         {recipe.ingredients.map((ingredient: Ingredient, i: number) => (
-          <li key={i}>{ingredient.name}</li>
+          <ListGroupItem key={i}>{ingredient.name}</ListGroupItem>
         ))}
-      </ul>
+      </ListGroup>
     </div>
   )
 }
